@@ -1,39 +1,31 @@
-import java.util.*;
-
 class MyQueue {
-    private Deque<Integer> stackIn;
-    private Deque<Integer> stackOut;
+    private Stack<Integer> input;
+    private Stack<Integer> output;
 
     public MyQueue() {
-        stackIn = new ArrayDeque<>();
-        stackOut = new ArrayDeque<>();
+        input = new Stack<>();
+        output = new Stack<>();
     }
 
     public void push(int x) {
-        stackIn.push(x);
-    }
-
-    private void transfer() {
-        while (!stackIn.isEmpty()) {
-            stackOut.push(stackIn.pop());
-        }
+        input.push(x);
     }
 
     public int pop() {
-        if (stackOut.isEmpty()) {
-            transfer();
-        }
-        return stackOut.pop();
+        peek();
+        return output.pop();
     }
 
     public int peek() {
-        if (stackOut.isEmpty()) {
-            transfer();
+        if (output.isEmpty()) {
+            while (!input.isEmpty()) {
+                output.push(input.pop());
+            }
         }
-        return stackOut.peek();
+        return output.peek();
     }
 
     public boolean empty() {
-        return stackIn.isEmpty() && stackOut.isEmpty();
+        return input.isEmpty() && output.isEmpty();
     }
 }
